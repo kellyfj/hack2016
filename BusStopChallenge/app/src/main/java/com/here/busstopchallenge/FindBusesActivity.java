@@ -47,7 +47,7 @@ public class FindBusesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 List<BusStop> nearby = getBusStopsNearby();
 
-                String toSpeak = "There are " + nearby.size() + " buses nearby";
+                String toSpeak = "There are " + nearby.size() + " bus stops near you";
                 Toast.makeText(getApplicationContext(), toSpeak, Toast.LENGTH_SHORT).show();
                 tts.speak(toSpeak, TextToSpeech.QUEUE_ADD, null);
 
@@ -93,12 +93,18 @@ public class FindBusesActivity extends AppCompatActivity {
         routes.add("350");
         routes.add("354");
         b350.setRouteList(routes);
+        b350.setStopNumber("8401");
+        b350.setDistanceInMeters(48.0);
 
         BusStop b90 = new BusStop();
         b90.setRouteList(Arrays.asList(new String[]{"90"}));
+        b90.setStopNumber("7201");
+        b90.setDistanceInMeters(98.0);
 
         BusStop b94 = new BusStop();
         b94.setRouteList(Arrays.asList(new String[]{"94"}));
+        b94.setStopNumber("4892");
+        b94.setDistanceInMeters(201.0);
 
         List<BusStop> list = new ArrayList<>();
         list.add(b350);
@@ -113,11 +119,11 @@ public class FindBusesActivity extends AppCompatActivity {
         TableLayout buses = (TableLayout) findViewById(R.id.busListLayout);
         TableRow tbrow0 = new TableRow(this);
         TextView tv0 = new TextView(this);
-        tv0.setText(" Bus # ");
+        tv0.setText(" Route # ");
         tv0.setTextColor(Color.BLACK);
         tbrow0.addView(tv0);
         TextView tv1 = new TextView(this);
-        tv1.setText(" Description ");
+        tv1.setText(" Stop # ");
         tv1.setTextColor(Color.BLACK);
         tbrow0.addView(tv1);
         TextView tv2 = new TextView(this);
@@ -129,29 +135,40 @@ public class FindBusesActivity extends AppCompatActivity {
         tv3.setTextColor(Color.BLACK);
         tbrow0.addView(tv3);
         buses.addView(tbrow0);
-        for (int i = 0; i < 4; i++) {
-            TableRow busRow = new TableRow(this);
-            TextView t1v = new TextView(this);
-            t1v.setText("" + i);
-            t1v.setTextColor(Color.BLACK);
-            t1v.setGravity(Gravity.CENTER);
-            busRow.addView(t1v);
-            TextView t2v = new TextView(this);
-            t2v.setText("Product " + i);
-            t2v.setTextColor(Color.BLACK);
-            t2v.setGravity(Gravity.CENTER);
-            busRow.addView(t2v);
-            TextView t3v = new TextView(this);
-            t3v.setText("Rs." + i);
-            t3v.setTextColor(Color.BLACK);
-            t3v.setGravity(Gravity.CENTER);
-            busRow.addView(t3v);
-            TextView t4v = new TextView(this);
-            t4v.setText("" + i * 15 / 32 * 10);
-            t4v.setTextColor(Color.BLACK);
-            t4v.setGravity(Gravity.CENTER);
-            busRow.addView(t4v);
-            buses.addView(busRow);
+
+        List<BusStop> busList = getBusStopsNearby();
+
+        for (BusStop b : busList) {
+
+            List<String> routes = b.getRouteList();
+
+            for(String route : routes) {
+                TableRow busRow = new TableRow(this);
+                TextView routeView = new TextView(this);
+                routeView.setText("" + route);
+                routeView.setTextColor(Color.BLACK);
+                routeView.setGravity(Gravity.CENTER);
+                busRow.addView(routeView);
+
+                TextView stopNumber = new TextView(this);
+                stopNumber.setText("" + b.getStopNumber());
+                stopNumber.setTextColor(Color.BLACK);
+                stopNumber.setGravity(Gravity.CENTER);
+                busRow.addView(stopNumber);
+
+                TextView distance = new TextView(this);
+                distance.setText("" + b.getDistanceInMeters());
+                distance.setTextColor(Color.BLACK);
+                distance.setGravity(Gravity.CENTER);
+                busRow.addView(distance);
+
+                TextView t4v = new TextView(this);
+                t4v.setText("" + 1 * 15 / 32 * 10);
+                t4v.setTextColor(Color.BLACK);
+                t4v.setGravity(Gravity.CENTER);
+                busRow.addView(t4v);
+                buses.addView(busRow);
+            }
         }
 
     }
