@@ -1,22 +1,57 @@
 package com.here.busstopchallenge;
 
 import android.graphics.Color;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 public class FindBusesActivity extends AppCompatActivity {
+    private static final String TAG = "FindBusesActivity";
+    private TextToSpeech tts;
+    private Button sayFoundBusesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_buses);
+
         init();
+        sayFoundBusesButton=(Button)findViewById(R.id.sayBusesFoundButton);
+
+        tts=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    tts.setLanguage(Locale.US);
+                }
+            }
+        });
+
+        sayFoundBusesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<BusStop> nearby = getBusStopsNearby();
+
+                String toSpeak = "There are " + nearby.size() + " buses nearby";
+                Toast.makeText(getApplicationContext(), toSpeak, Toast.LENGTH_SHORT).show();
+                tts.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
     }
 
     @Override
@@ -40,6 +75,25 @@ public class FindBusesActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private List<BusStop> getBusStopsNearby() {
+        BusStop b350 = new BusStop();
+        b350.setRouteList(Arrays.asList(new String[]{"350, 354"}));
+
+        BusStop b90 = new BusStop();
+        b90.setRouteList(Arrays.asList(new String[]{"90"}));
+
+        BusStop b94 = new BusStop();
+        b94.setRouteList(Arrays.asList(new String[]{"94"}));
+
+        List<BusStop> list = new ArrayList<>();
+        list.add(b350);
+        list.add(b90);
+        list.add(b94);
+
+        return list;
+    }
+
 
     public void init() {
         TableLayout buses = (TableLayout) findViewById(R.id.busListLayout);
@@ -86,5 +140,13 @@ public class FindBusesActivity extends AppCompatActivity {
             buses.addView(busRow);
         }
 
+    }
+
+    public void onPause(){
+        if(tts !=null){
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onPause();
     }
 }

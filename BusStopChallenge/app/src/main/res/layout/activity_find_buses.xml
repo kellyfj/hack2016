@@ -8,10 +8,11 @@
 
     <TextView
         android:id="@+id/topText"
-        android:text="Bus\nStops\nNearby"
+        android:text="Bus Stops\nNearby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:textSize="70dp"
         />
 
@@ -35,5 +36,17 @@
                 android:textSize="9dp" >
             </TextView>
         </TableRow>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Say it"
+            android:id="@+id/sayBusesFoundButton"
+            android:layout_below="@+id/busListLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="46dp" />
     </TableLayout>
+
+
+
+
 </RelativeLayout>
