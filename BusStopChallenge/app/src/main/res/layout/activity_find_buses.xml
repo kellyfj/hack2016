@@ -36,17 +36,20 @@
                 android:textSize="9dp" >
             </TextView>
         </TableRow>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Say it"
-            android:id="@+id/sayBusesFoundButton"
-            android:layout_below="@+id/busListLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="46dp" />
+
     </TableLayout>
 
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Say it"
+        android:id="@+id/sayBusesFoundButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="46dp"
+        android:textSize="48dp"
+        android:gravity="center"
+        />
 
 
 </RelativeLayout>

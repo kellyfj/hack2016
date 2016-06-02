@@ -44,6 +44,8 @@
         android:layout_below="@+id/button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="46dp"
+        android:textSize="48dp"
+        android:gravity="center"
         android:onClick="findBusesNearMe" />
 
 </RelativeLayout>
