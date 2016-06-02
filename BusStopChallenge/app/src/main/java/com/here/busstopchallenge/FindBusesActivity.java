@@ -162,14 +162,6 @@ public class FindBusesActivity extends AppCompatActivity {
                 distance.setGravity(Gravity.CENTER);
                 busRow.addView(distance);
 
-                /*
-                TextView t4v = new TextView(this);
-                t4v.setText("" + 1 * 15 / 32 * 10);
-                t4v.setTextColor(Color.BLACK);
-                t4v.setGravity(Gravity.CENTER);
-                busRow.addView(t4v);
-                */
-
 
                 Button describeMe = new Button(this);
                 describeMe.setText("Describe");
