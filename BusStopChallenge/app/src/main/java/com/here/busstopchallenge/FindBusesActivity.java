@@ -1,5 +1,6 @@
 package com.here.busstopchallenge;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
@@ -164,10 +165,21 @@ public class FindBusesActivity extends AppCompatActivity {
 
 
                 Button describeMe = new Button(this);
+                describeMe.setTag(b.getStopNumber());
                 describeMe.setText("Describe");
                 describeMe.setTextColor(Color.BLACK);
                 describeMe.setGravity(Gravity.CENTER);
                 describeMe.setTextSize(14.0f);
+                describeMe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), DescribeBusStopActivity.class);
+                        String stopNumber = (String) v.getTag();
+                        intent.putExtra("BUS_STOP", stopNumber);
+                        startActivity(intent);
+                    }
+                });
+
                 busRow.addView(describeMe);
 
                 buses.addView(busRow);

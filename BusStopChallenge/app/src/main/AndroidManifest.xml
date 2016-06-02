@@ -24,6 +24,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.here.busstopchallenge.MainActivity" />
         </activity>
+        <activity
+            android:name=".DescribeBusStopActivity"
+            android:label="@string/title_activity_describe_bus_stop" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">BusStopChallenge</string>
+    <string name="app_name">HERE Bus Stop Challenge</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="button_send">Find Bus Stops Near Me</string>
-    <string name="title_activity_find_buses">FindBusesActivity</string>
+    <string name="title_activity_find_buses">Finding Buses . . .</string>
+    <string name="title_activity_describe_bus_stop">Describing Bus Stop . . .</string>
 </resources>
