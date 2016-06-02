@@ -30,7 +30,7 @@ public class FindBusesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_buses);
 
-        init();
+        initTable();
         sayFoundBusesButton=(Button)findViewById(R.id.sayBusesFoundButton);
 
         tts=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -49,7 +49,18 @@ public class FindBusesActivity extends AppCompatActivity {
 
                 String toSpeak = "There are " + nearby.size() + " buses nearby";
                 Toast.makeText(getApplicationContext(), toSpeak, Toast.LENGTH_SHORT).show();
-                tts.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                tts.speak(toSpeak, TextToSpeech.QUEUE_ADD, null);
+
+                if(nearby.size() > 0) {
+                    tts.speak("The routes include", TextToSpeech.QUEUE_ADD, null);
+                    for (BusStop b : nearby) {
+                        List<String> routes = b.getRouteList();
+                        for(String route: routes) {
+                            tts.speak("Route "+route, TextToSpeech.QUEUE_ADD, null);
+                        }
+                    }
+                }
+
             }
         });
     }
@@ -78,7 +89,10 @@ public class FindBusesActivity extends AppCompatActivity {
 
     private List<BusStop> getBusStopsNearby() {
         BusStop b350 = new BusStop();
-        b350.setRouteList(Arrays.asList(new String[]{"350, 354"}));
+        List<String> routes = new ArrayList();
+        routes.add("350");
+        routes.add("354");
+        b350.setRouteList(routes);
 
         BusStop b90 = new BusStop();
         b90.setRouteList(Arrays.asList(new String[]{"90"}));
@@ -95,7 +109,7 @@ public class FindBusesActivity extends AppCompatActivity {
     }
 
 
-    public void init() {
+    public void initTable() {
         TableLayout buses = (TableLayout) findViewById(R.id.busListLayout);
         TableRow tbrow0 = new TableRow(this);
         TextView tv0 = new TextView(this);
@@ -107,7 +121,7 @@ public class FindBusesActivity extends AppCompatActivity {
         tv1.setTextColor(Color.BLACK);
         tbrow0.addView(tv1);
         TextView tv2 = new TextView(this);
-        tv2.setText(" Distance ");
+        tv2.setText(" Distance (Meters) ");
         tv2.setTextColor(Color.BLACK);
         tbrow0.addView(tv2);
         TextView tv3 = new TextView(this);
