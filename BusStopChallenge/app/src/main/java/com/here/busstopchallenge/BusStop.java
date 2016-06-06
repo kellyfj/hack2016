@@ -51,6 +51,10 @@ public class BusStop {
         this.name = name;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Name: ").append(name)

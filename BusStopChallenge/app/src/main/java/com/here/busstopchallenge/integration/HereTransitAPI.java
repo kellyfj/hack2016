@@ -1,10 +1,21 @@
 package com.here.busstopchallenge.integration;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.here.busstopchallenge.BusStop;
+import com.here.busstopchallenge.DescribeBusStopActivity;
+import com.here.busstopchallenge.R;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -24,6 +35,7 @@ public class HereTransitAPI {
             "&y=42.365813&x=-71.185237&radius=100&max=20";
     private static final String TAG = "HereTransitAPI";
     private List<BusStop> busStops;
+    private Activity callback;
 
     public boolean hasBusStops() {
         return busStops != null;
@@ -33,7 +45,8 @@ public class HereTransitAPI {
         return Collections.unmodifiableList(busStops);
     }
 
-    public Object getStationsNearby() {
+    public Object getStationsNearby(Activity callback) {
+        this.callback = callback;
         busStops = null;
         new HttpRequestTask().execute();
 
@@ -79,7 +92,7 @@ public class HereTransitAPI {
                             Map<String, Object> route = ( Map<String, Object>) routeObj;
                             String routeName = (String) route.get("@name");
                             String routeDirection = (String) route.get("@dir");
-                            String routeDescription = routeName + " towards " + routeDirection;
+                            String routeDescription = routeName + " towards \n " + routeDirection;
                             routeDescriptionList.add(routeDescription);
                         }
                         //Map<String, Object> lines =
@@ -93,6 +106,79 @@ public class HereTransitAPI {
                     }
                     Log.i(TAG, "Found " + i + " bus stops nearby");
                 }
+
+            drawTable(busStops);
+        }
+
+    }
+
+    public void drawTable(List<BusStop> busList) {
+        TableLayout buses = (TableLayout) callback.findViewById(R.id.busListLayout);
+        TableRow tbrow0 = new TableRow(callback);
+        TextView tv0 = new TextView(callback);
+        tv0.setText("Route \n Description");
+        tv0.setTextColor(Color.BLACK);
+        tbrow0.addView(tv0);
+        TextView tv1 = new TextView(callback);
+        tv1.setText("Stop \n Name");
+        tv1.setTextColor(Color.BLACK);
+        tbrow0.addView(tv1);
+        TextView tv2 = new TextView(callback);
+        tv2.setText("Distance \n (Meters)");
+        tv2.setTextColor(Color.BLACK);
+        tbrow0.addView(tv2);
+        TextView tv3 = new TextView(callback);
+        tv3.setText(" Select ");
+        tv3.setTextColor(Color.BLACK);
+        tbrow0.addView(tv3);
+        buses.addView(tbrow0);
+
+
+        for (BusStop b : busList) {
+
+            List<String> routes = b.getRouteList();
+
+            for(String route : routes) {
+                TableRow busRow = new TableRow(callback);
+                TextView routeView = new TextView(callback);
+                routeView.setText("" + route);
+                routeView.setTextColor(Color.BLACK);
+                routeView.setGravity(Gravity.LEFT);
+                busRow.addView(routeView);
+
+                TextView stopNumber = new TextView(callback);
+                stopNumber.setText("" + b.getName());
+                stopNumber.setTextColor(Color.BLACK);
+                stopNumber.setGravity(Gravity.LEFT);
+                busRow.addView(stopNumber);
+
+                TextView distance = new TextView(callback);
+                distance.setText("" + b.getDistanceInMeters());
+                distance.setTextColor(Color.BLACK);
+                distance.setGravity(Gravity.LEFT);
+                busRow.addView(distance);
+
+
+                Button describeMe = new Button(callback);
+                describeMe.setTag(b.getStopId());
+                describeMe.setText("Describe");
+                describeMe.setTextColor(Color.BLACK);
+                describeMe.setGravity(Gravity.CENTER);
+                describeMe.setTextSize(14.0f);
+                describeMe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(callback.getApplicationContext(), DescribeBusStopActivity.class);
+                        String stopNumber = (String) v.getTag();
+                        intent.putExtra("BUS_STOP", stopNumber);
+                        callback.startActivity(intent);
+                    }
+                });
+
+                busRow.addView(describeMe);
+
+                buses.addView(busRow);
+            }
         }
 
     }

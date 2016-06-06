@@ -53,9 +53,9 @@ public class FindBusesActivity extends AppCompatActivity {
         }
 
         HereTransitAPI api = new HereTransitAPI();
-        api.getStationsNearby();
+        api.getStationsNearby(this);
 
-        initTable();
+        //initTable();
         sayFoundBusesButton=(Button)findViewById(R.id.sayBusesFoundButton);
 
         tts=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
