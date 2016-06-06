@@ -82,6 +82,7 @@ public class HereTransitAPI {
                         Map<String, Object> stnMap = (Map<String, Object>) stn;
                         String name = (String) stnMap.get("@name");
                         String distanceString = (String) stnMap.get("@distance");
+                        String stopId = (String) stnMap.get("@id");
                         Log.d(TAG, "Object " + i + ": " +stnMap);
 
                         Map<String, Object> lines = (Map<String, Object>) stnMap.get("Lines");
@@ -98,6 +99,7 @@ public class HereTransitAPI {
                         //Map<String, Object> lines =
                         i++;
                         BusStop b = new BusStop();
+                        b.setStopId(stopId);
                         b.setName(name);
                         b.setDistanceInMeters(distanceString);
                         b.setRouteList(routeDescriptionList);
@@ -141,6 +143,9 @@ public class HereTransitAPI {
             for(String route : routes) {
                 TableRow busRow = new TableRow(callback);
                 TextView routeView = new TextView(callback);
+                if(route.length() > 30) {
+                    route = route.substring(0,30);
+                }
                 routeView.setText("" + route);
                 routeView.setTextColor(Color.BLACK);
                 routeView.setGravity(Gravity.LEFT);
