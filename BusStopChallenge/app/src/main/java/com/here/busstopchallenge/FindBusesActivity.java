@@ -144,15 +144,15 @@ public class FindBusesActivity extends AppCompatActivity {
         TableLayout buses = (TableLayout) findViewById(R.id.busListLayout);
         TableRow tbrow0 = new TableRow(this);
         TextView tv0 = new TextView(this);
-        tv0.setText(" Route # ");
+        tv0.setText("Route \n Description");
         tv0.setTextColor(Color.BLACK);
         tbrow0.addView(tv0);
         TextView tv1 = new TextView(this);
-        tv1.setText(" Stop # ");
+        tv1.setText("Stop \n Name");
         tv1.setTextColor(Color.BLACK);
         tbrow0.addView(tv1);
         TextView tv2 = new TextView(this);
-        tv2.setText(" Distance (Meters) ");
+        tv2.setText("Distance \n (Meters)");
         tv2.setTextColor(Color.BLACK);
         tbrow0.addView(tv2);
         TextView tv3 = new TextView(this);
