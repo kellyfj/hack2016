@@ -30,14 +30,18 @@ import java.util.Map;
  * Created by kellyfj on 6/6/16.
  */
 public class HereTransitAPI {
+    private static final String APP_ID = "inhesa7azejETefrudAC";
+    private static final String APP_CODE = "UP6A4YcFEAgshQMhc-sYsA";
+    private static final String WATERTOWN_LAT = "42.365813";
+    private static final String WATERTOWN_LON = "-71.185237";
     private static final Map<String, BusStop> BUS_STOP_CACHE = new HashMap<String, BusStop>();
     private static final String SEARCH_URL = "https://cit.transit.api.here.com/search/by_geocoord.json?" +
-            "app_id=inhesa7azejETefrudAC&app_code=UP6A4YcFEAgshQMhc-sYsA" +
-            "&y=42.365813&x=-71.185237&radius=100&max=20";
+            "app_id="+APP_ID+"&app_code=" +APP_CODE +
+            "&y=" + WATERTOWN_LAT + "&x=" + WATERTOWN_LON + "&radius=100&max=20";
 
     private static final String STOP_IDS_URL = "https://cit.transit.api.here.com/search/by_stopids.json?" +
-            "app_id=inhesa7azejETefrudAC" +
-            "&app_code=UP6A4YcFEAgshQMhc-sYsA" +
+            "app_id=" +APP_ID +
+            "&app_code=" + APP_CODE +
             "&stopIds=REPLACE_ME" +
             "&lang=en";
 
