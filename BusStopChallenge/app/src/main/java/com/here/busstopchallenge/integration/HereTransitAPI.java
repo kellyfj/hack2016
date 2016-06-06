@@ -198,6 +198,9 @@ public class HereTransitAPI {
     }
 
 
+    /**
+     * This class isn't used but could be useful
+     */
     private class RetrieveBusStopIdTask extends AsyncTask<Void, Void, Map> {
         private String stopId;
 
@@ -251,58 +254,12 @@ public class HereTransitAPI {
                     Log.i(TAG, "" + b.toString());
                 }
                 Log.i(TAG, "Found " + i + " bus stops for Id " + stopId);
-                drawDescriptionTable(b);
+                //Do something on callback
             }
         }
 
     }
 
-    public void drawDescriptionTable(BusStop busStop) {
-        TableLayout stopTable = (TableLayout) callback.findViewById(R.id.busStopDescriptionLayout);
-        TableRow tbrow0 = new TableRow(callback);
-        TextView tv0 = new TextView(callback);
-        tv0.setText("Field");
-        tv0.setTextColor(Color.BLACK);
-        tbrow0.addView(tv0);
-        TextView tv1 = new TextView(callback);
-        tv1.setText("Value");
-        tv1.setTextColor(Color.BLACK);
-        tbrow0.addView(tv1);
-
-        stopTable.addView(tbrow0);
-
-
-        TableRow stopRow = new TableRow(callback);
-
-        //Name
-        TextView nameField = new TextView(callback);
-        nameField.setText("Name");
-        nameField.setTextColor(Color.BLACK);
-        nameField.setGravity(Gravity.LEFT);
-        stopRow.addView(nameField);
-
-        TextView nameValue = new TextView(callback);
-        nameValue.setText("" + busStop.getName());
-        nameValue.setTextColor(Color.BLACK);
-        nameValue.setGravity(Gravity.LEFT);
-        stopRow.addView(nameValue);
-        stopTable.addView(stopRow);
-
-        //Distance
-        stopRow = new TableRow(callback);
-        TextView distance = new TextView(callback);
-        distance.setText("Distance");
-        distance.setTextColor(Color.BLACK);
-        distance.setGravity(Gravity.LEFT);
-        stopRow.addView(distance);
-
-        TextView distanceValue = new TextView(callback);
-        distanceValue.setText("" + busStop.getDistanceInMeters());
-        distanceValue.setTextColor(Color.BLACK);
-        distanceValue.setGravity(Gravity.LEFT);
-        stopRow.addView(distanceValue);
-        stopTable.addView(stopRow);
-    }
 
 
 }
