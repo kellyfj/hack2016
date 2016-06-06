@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ import java.util.Map;
  * Created by kellyfj on 6/6/16.
  */
 public class HereTransitAPI {
-
+    private static final Map<String, BusStop> BUS_STOP_CACHE = new HashMap<String, BusStop>();
     private static final String SEARCH_URL = "https://cit.transit.api.here.com/search/by_geocoord.json?" +
             "app_id=inhesa7azejETefrudAC&app_code=UP6A4YcFEAgshQMhc-sYsA" +
             "&y=42.365813&x=-71.185237&radius=100&max=20";
@@ -46,6 +47,10 @@ public class HereTransitAPI {
 
     public List<BusStop> getBusStops() {
         return Collections.unmodifiableList(busStops);
+    }
+
+    public BusStop getCachedBusStop(String id) {
+        return BUS_STOP_CACHE.get(id);
     }
 
     public Object getStationsNearby(Activity callback) {
@@ -119,6 +124,7 @@ public class HereTransitAPI {
                         b.setLon(lon);
                         Log.i(TAG, ""+b.toString());
                         busStops.add(b);
+                        BUS_STOP_CACHE.put(b.getStopId(), b);
                     }
                     Log.i(TAG, "Found " + i + " bus stops nearby");
                 }

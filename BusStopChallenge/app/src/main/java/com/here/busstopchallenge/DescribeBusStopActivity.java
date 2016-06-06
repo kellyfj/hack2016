@@ -47,8 +47,9 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         describeBusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String spacifiedBusStopId = spacifyBusStopNumber(busStopId);
-                String toSpeak = "Describing Bus stop  " + spacifiedBusStopId;
+                //String spacifiedBusStopId = spacifyBusStopNumber(busStopId);
+                BusStop cached = api.getCachedBusStop(busStopId);
+                String toSpeak = "Describing Bus stop  " + cached.getName();
                 tts.speak(toSpeak, TextToSpeech.QUEUE_ADD, null);
 
             }
