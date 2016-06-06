@@ -46,6 +46,7 @@ public class HereTransitAPI {
             "&lang=en";
 
     private static final String TAG = "HereTransitAPI";
+    private static final int HEADER_COLOR = Color.parseColor("#9999ee");
     private List<BusStop> busStops;
     private Activity callback;
 
@@ -144,14 +145,17 @@ public class HereTransitAPI {
         TextView tv0 = new TextView(callback);
         tv0.setText("Route \n Description");
         tv0.setTextColor(Color.BLACK);
+        tv0.setBackgroundColor(HEADER_COLOR);
         tbrow0.addView(tv0);
         TextView tv1 = new TextView(callback);
         tv1.setText("Stop \n Name");
         tv1.setTextColor(Color.BLACK);
+        tv1.setBackgroundColor(HEADER_COLOR);
         tbrow0.addView(tv1);
         TextView tv2 = new TextView(callback);
         tv2.setText("Distance \n (Meters)");
         tv2.setTextColor(Color.BLACK);
+        tv2.setBackgroundColor(HEADER_COLOR);
         tbrow0.addView(tv2);
 
         busesTable.addView(tbrow0);

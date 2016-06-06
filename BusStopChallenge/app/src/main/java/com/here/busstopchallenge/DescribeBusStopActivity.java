@@ -24,6 +24,7 @@ public class DescribeBusStopActivity extends AppCompatActivity {
     private TextToSpeech tts;
     private String busStopId;
     private HereTransitAPI api = new HereTransitAPI();
+    private static final int HEADER_COLOR = Color.parseColor("#9999ee");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +101,12 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         TextView tv0 = new TextView(this);
         tv0.setText("Field");
         tv0.setTextColor(Color.BLACK);
+        tv0.setBackgroundColor(HEADER_COLOR);
         tbrow0.addView(tv0);
         TextView tv1 = new TextView(this);
         tv1.setText("Value");
         tv1.setTextColor(Color.BLACK);
+        tv1.setBackgroundColor(HEADER_COLOR);
         tbrow0.addView(tv1);
 
         stopTable.addView(tbrow0);
@@ -138,6 +141,26 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         distanceValue.setTextColor(Color.BLACK);
         distanceValue.setGravity(Gravity.LEFT);
         stopRow.addView(distanceValue);
+        stopTable.addView(stopRow);
+
+        //Routes
+        stopRow = new TableRow(this);
+        TextView route = new TextView(this);
+        route.setText("Routes Served");
+        route.setTextColor(Color.BLACK);
+        route.setGravity(Gravity.LEFT);
+        stopRow.addView(route);
+
+        TextView routeValues = new TextView(this);
+        StringBuilder sb = new StringBuilder();
+        for(String routeDesc : busStop.getRouteList()) {
+            sb.append(routeDesc).append("\n");
+        }
+
+        routeValues.setText("" + sb.toString());
+        routeValues.setTextColor(Color.BLACK);
+        routeValues.setGravity(Gravity.LEFT);
+        stopRow.addView(routeValues);
         stopTable.addView(stopRow);
     }
 }
