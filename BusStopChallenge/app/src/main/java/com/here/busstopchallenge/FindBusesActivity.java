@@ -16,6 +16,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.here.busstopchallenge.integration.HereTransitAPI;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,13 +44,16 @@ public class FindBusesActivity extends AppCompatActivity {
             double longitude = gps.getLongitude();
 
             // \n is for new line
-            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
         } else {
             // Can't get location.
             // GPS or network is not enabled.
             // Ask user to enable GPS/network in settings.
             gps.showSettingsAlert();
         }
+
+        HereTransitAPI api = new HereTransitAPI();
+        api.getStationsNearby();
 
         initTable();
         sayFoundBusesButton=(Button)findViewById(R.id.sayBusesFoundButton);

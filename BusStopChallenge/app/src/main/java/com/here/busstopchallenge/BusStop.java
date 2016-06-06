@@ -10,6 +10,7 @@ import java.util.List;
 public class BusStop {
 
     private List<String> routeList = new ArrayList<String>();
+    private String name;
     private String stopId;
     private Double distanceInMeters;
     private String stopPoleOrShelterDescription;
@@ -46,4 +47,7 @@ public class BusStop {
         distanceInMeters = d;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 }
