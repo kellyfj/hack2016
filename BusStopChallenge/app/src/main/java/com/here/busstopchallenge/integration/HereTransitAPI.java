@@ -129,10 +129,7 @@ public class HereTransitAPI {
         tv2.setText("Distance \n (Meters)");
         tv2.setTextColor(Color.BLACK);
         tbrow0.addView(tv2);
-        TextView tv3 = new TextView(callback);
-        tv3.setText(" Select ");
-        tv3.setTextColor(Color.BLACK);
-        tbrow0.addView(tv3);
+
         buses.addView(tbrow0);
 
 
@@ -142,6 +139,8 @@ public class HereTransitAPI {
 
             for(String route : routes) {
                 TableRow busRow = new TableRow(callback);
+                //FROM HERE
+                /*
                 TextView routeView = new TextView(callback);
                 if(route.length() > 30) {
                     route = route.substring(0,30);
@@ -149,7 +148,27 @@ public class HereTransitAPI {
                 routeView.setText("" + route);
                 routeView.setTextColor(Color.BLACK);
                 routeView.setGravity(Gravity.LEFT);
-                busRow.addView(routeView);
+                */
+                //TO HERE
+                Button describeMe = new Button(callback);
+                if(route.length() > 30) {
+                    route = route.substring(0,30);
+                }
+                describeMe.setTag(b.getStopId());
+                describeMe.setText(""+ route);
+                describeMe.setTextColor(Color.BLACK);
+                describeMe.setGravity(Gravity.CENTER);
+                describeMe.setTextSize(14.0f);
+                describeMe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(callback.getApplicationContext(), DescribeBusStopActivity.class);
+                        String stopNumber = (String) v.getTag();
+                        intent.putExtra("BUS_STOP", stopNumber);
+                        callback.startActivity(intent);
+                    }
+                });
+                busRow.addView(describeMe);
 
                 TextView stopNumber = new TextView(callback);
                 stopNumber.setText("" + b.getName());
@@ -163,7 +182,7 @@ public class HereTransitAPI {
                 distance.setGravity(Gravity.LEFT);
                 busRow.addView(distance);
 
-
+                /*
                 Button describeMe = new Button(callback);
                 describeMe.setTag(b.getStopId());
                 describeMe.setText("Describe");
@@ -181,6 +200,7 @@ public class HereTransitAPI {
                 });
 
                 busRow.addView(describeMe);
+                */
 
                 buses.addView(busRow);
             }
