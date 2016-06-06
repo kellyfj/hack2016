@@ -3,7 +3,6 @@ package com.here.busstopchallenge.integration;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.Gravity;
@@ -48,12 +47,12 @@ public class HereTransitAPI {
     public Object getStationsNearby(Activity callback) {
         this.callback = callback;
         busStops = null;
-        new HttpRequestTask().execute();
+        new SearchForBusStopsNearbyTask().execute();
 
         return null;
     }
 
-    private class HttpRequestTask extends AsyncTask<Void, Void, Map> {
+    private class SearchForBusStopsNearbyTask extends AsyncTask<Void, Void, Map> {
         @Override
         protected Map doInBackground(Void... params) {
             try {
@@ -152,8 +151,8 @@ public class HereTransitAPI {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(callback.getApplicationContext(), DescribeBusStopActivity.class);
-                        String stopNumber = (String) v.getTag();
-                        intent.putExtra("BUS_STOP", stopNumber);
+                        String stopId = (String) v.getTag();
+                        intent.putExtra("BUS_STOP", stopId);
                         callback.startActivity(intent);
                     }
                 });
