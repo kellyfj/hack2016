@@ -10,6 +10,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,12 +21,16 @@ import java.util.Map;
 public class HereTransitAPI {
 
     private static final String url = "https://cit.transit.api.here.com/search/by_geocoord.json?app_id=inhesa7azejETefrudAC&app_code=UP6A4YcFEAgshQMhc-sYsA" +
-            "&y=42.365813&x=-71.185237&radius=500&max=20";
+            "&y=42.365813&x=-71.185237&radius=100&max=20";
     private static final String TAG = "HereTransitAPI";
     private List<BusStop> busStops;
 
     public boolean hasBusStops() {
         return busStops != null;
+    }
+
+    public List<BusStop> getBusStops() {
+        return Collections.unmodifiableList(busStops);
     }
 
     public Object getStationsNearby() {
@@ -63,10 +68,27 @@ public class HereTransitAPI {
                     for(Object stn : stnList) {
                         Map<String, Object> stnMap = (Map<String, Object>) stn;
                         String name = (String) stnMap.get("@name");
+                        String distanceString = (String) stnMap.get("@distance");
                         Log.d(TAG, "Object " + i + ": " +stnMap);
+
+                        Map<String, Object> lines = (Map<String, Object>) stnMap.get("Lines");
+                        List<Object> routeList = (List<Object>) lines.get("Line");
+
+                        List<String> routeDescriptionList = new ArrayList();
+                        for(Object routeObj : routeList) {
+                            Map<String, Object> route = ( Map<String, Object>) routeObj;
+                            String routeName = (String) route.get("@name");
+                            String routeDirection = (String) route.get("@dir");
+                            String routeDescription = routeName + " towards " + routeDirection;
+                            routeDescriptionList.add(routeDescription);
+                        }
+                        //Map<String, Object> lines =
                         i++;
                         BusStop b = new BusStop();
                         b.setName(name);
+                        b.setDistanceInMeters(distanceString);
+                        b.setRouteList(routeDescriptionList);
+                        Log.i(TAG, ""+b.toString());
                         busStops.add(b);
                     }
                     Log.i(TAG, "Found " + i + " bus stops nearby");

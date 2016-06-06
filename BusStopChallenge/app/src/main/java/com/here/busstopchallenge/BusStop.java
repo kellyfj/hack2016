@@ -12,7 +12,7 @@ public class BusStop {
     private List<String> routeList = new ArrayList<String>();
     private String name;
     private String stopId;
-    private Double distanceInMeters;
+    private String distanceInMeters;
     private String stopPoleOrShelterDescription;
     private boolean hasBench;
     private String benchRelativeLocation;
@@ -39,15 +39,27 @@ public class BusStop {
         stopId = s;
     }
 
-    public Double getDistanceInMeters() {
+    public String getDistanceInMeters() {
         return distanceInMeters;
     }
 
-    public void setDistanceInMeters(double d) {
+    public void setDistanceInMeters(String d) {
         distanceInMeters = d;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(name)
+                .append("\n Distance in Meters: ").append(distanceInMeters);
+        sb.append("\n Routes Include: ");
+
+        for(String routeDescription : routeList) {
+            sb.append("\n\t " + routeDescription);
+        }
+        return sb.toString();
     }
 }

@@ -119,17 +119,17 @@ public class FindBusesActivity extends AppCompatActivity {
         routes.add("354");
         b350.setRouteList(routes);
         b350.setStopId("8401");
-        b350.setDistanceInMeters(48.0);
+        b350.setDistanceInMeters("48.0");
 
         BusStop b90 = new BusStop();
         b90.setRouteList(Arrays.asList(new String[]{"90"}));
         b90.setStopId("7201");
-        b90.setDistanceInMeters(98.0);
+        b90.setDistanceInMeters("98.0");
 
         BusStop b94 = new BusStop();
         b94.setRouteList(Arrays.asList(new String[]{"94"}));
         b94.setStopId("4892");
-        b94.setDistanceInMeters(201.0);
+        b94.setDistanceInMeters("201.0");
 
         List<BusStop> list = new ArrayList<>();
         list.add(b350);
