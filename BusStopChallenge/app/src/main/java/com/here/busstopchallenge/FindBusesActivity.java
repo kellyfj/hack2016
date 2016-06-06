@@ -27,8 +27,8 @@ public class FindBusesActivity extends AppCompatActivity {
     private static final String TAG = "FindBusesActivity";
     private TextToSpeech tts;
     private Button sayFoundBusesButton;
-
-    GPSTracker gps;
+    private HereTransitAPI api = new HereTransitAPI();
+    private GPSTracker gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class FindBusesActivity extends AppCompatActivity {
             gps.showSettingsAlert();
         }
 
-        HereTransitAPI api = new HereTransitAPI();
+
         api.getStationsNearby(this);
 
         //initTable();
@@ -70,18 +70,23 @@ public class FindBusesActivity extends AppCompatActivity {
         sayFoundBusesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<BusStop> nearby = getBusStopsNearby();
+                List<BusStop> nearby = api.getBusStops();
 
-                String toSpeak = "There are " + nearby.size() + " bus stops near you";
+                int numRoutes = 0;
+                for(BusStop b : nearby) {
+                    numRoutes += b.getRouteList().size();
+                }
+
+                String toSpeak = "There are " + nearby.size() + " bus stops near you. They cover " + numRoutes + " separate bus routes";
                 Toast.makeText(getApplicationContext(), toSpeak, Toast.LENGTH_SHORT).show();
                 tts.speak(toSpeak, TextToSpeech.QUEUE_ADD, null);
 
-                if(nearby.size() > 0) {
+                if (nearby.size() > 0) {
                     tts.speak("The routes include", TextToSpeech.QUEUE_ADD, null);
                     for (BusStop b : nearby) {
                         List<String> routes = b.getRouteList();
-                        for(String route: routes) {
-                            tts.speak("Route "+route, TextToSpeech.QUEUE_ADD, null);
+                        for (String route : routes) {
+                            tts.speak("Route " + route, TextToSpeech.QUEUE_ADD, null);
                         }
                     }
                 }
@@ -112,105 +117,7 @@ public class FindBusesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private List<BusStop> getBusStopsNearby() {
-        BusStop b350 = new BusStop();
-        List<String> routes = new ArrayList();
-        routes.add("350");
-        routes.add("354");
-        b350.setRouteList(routes);
-        b350.setStopId("8401");
-        b350.setDistanceInMeters("48.0");
 
-        BusStop b90 = new BusStop();
-        b90.setRouteList(Arrays.asList(new String[]{"90"}));
-        b90.setStopId("7201");
-        b90.setDistanceInMeters("98.0");
-
-        BusStop b94 = new BusStop();
-        b94.setRouteList(Arrays.asList(new String[]{"94"}));
-        b94.setStopId("4892");
-        b94.setDistanceInMeters("201.0");
-
-        List<BusStop> list = new ArrayList<>();
-        list.add(b350);
-        list.add(b90);
-        list.add(b94);
-
-        return list;
-    }
-
-
-    public void initTable() {
-        TableLayout buses = (TableLayout) findViewById(R.id.busListLayout);
-        TableRow tbrow0 = new TableRow(this);
-        TextView tv0 = new TextView(this);
-        tv0.setText("Route \n Description");
-        tv0.setTextColor(Color.BLACK);
-        tbrow0.addView(tv0);
-        TextView tv1 = new TextView(this);
-        tv1.setText("Stop \n Name");
-        tv1.setTextColor(Color.BLACK);
-        tbrow0.addView(tv1);
-        TextView tv2 = new TextView(this);
-        tv2.setText("Distance \n (Meters)");
-        tv2.setTextColor(Color.BLACK);
-        tbrow0.addView(tv2);
-        TextView tv3 = new TextView(this);
-        tv3.setText(" Select ");
-        tv3.setTextColor(Color.BLACK);
-        tbrow0.addView(tv3);
-        buses.addView(tbrow0);
-
-        List<BusStop> busList = getBusStopsNearby();
-
-        for (BusStop b : busList) {
-
-            List<String> routes = b.getRouteList();
-
-            for(String route : routes) {
-                TableRow busRow = new TableRow(this);
-                TextView routeView = new TextView(this);
-                routeView.setText("" + route);
-                routeView.setTextColor(Color.BLACK);
-                routeView.setGravity(Gravity.CENTER);
-                busRow.addView(routeView);
-
-                TextView stopNumber = new TextView(this);
-                stopNumber.setText("" + b.getStopId());
-                stopNumber.setTextColor(Color.BLACK);
-                stopNumber.setGravity(Gravity.CENTER);
-                busRow.addView(stopNumber);
-
-                TextView distance = new TextView(this);
-                distance.setText("" + b.getDistanceInMeters());
-                distance.setTextColor(Color.BLACK);
-                distance.setGravity(Gravity.CENTER);
-                busRow.addView(distance);
-
-
-                Button describeMe = new Button(this);
-                describeMe.setTag(b.getStopId());
-                describeMe.setText("Describe");
-                describeMe.setTextColor(Color.BLACK);
-                describeMe.setGravity(Gravity.CENTER);
-                describeMe.setTextSize(14.0f);
-                describeMe.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(), DescribeBusStopActivity.class);
-                        String stopNumber = (String) v.getTag();
-                        intent.putExtra("BUS_STOP", stopNumber);
-                        startActivity(intent);
-                    }
-                });
-
-                busRow.addView(describeMe);
-
-                buses.addView(busRow);
-            }
-        }
-
-    }
 
     public void onPause(){
         if(tts !=null){
