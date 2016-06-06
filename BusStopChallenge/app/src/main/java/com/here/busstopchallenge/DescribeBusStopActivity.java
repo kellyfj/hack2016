@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.here.busstopchallenge.integration.HereTransitAPI;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -16,6 +18,7 @@ public class DescribeBusStopActivity extends AppCompatActivity {
     private Button describeBusButton;
     private TextToSpeech tts;
     private String busStopId;
+    private HereTransitAPI api = new HereTransitAPI();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,8 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         if (extras != null) {
              busStopId = extras.getString("BUS_STOP");
         }
+
+        api.getStationById(busStopId);
 
         describeBusButton.setOnClickListener(new View.OnClickListener() {
             @Override

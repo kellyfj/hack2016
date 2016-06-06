@@ -58,6 +58,7 @@ public class BusStop {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Name: ").append(name)
+                .append("\b Id : " + stopId)
                 .append("\n Distance in Meters: ").append(distanceInMeters);
         sb.append("\n Routes Include: ");
 

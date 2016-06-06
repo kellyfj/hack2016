@@ -30,15 +30,19 @@ import java.util.Map;
  */
 public class HereTransitAPI {
 
-    private static final String url = "https://cit.transit.api.here.com/search/by_geocoord.json?app_id=inhesa7azejETefrudAC&app_code=UP6A4YcFEAgshQMhc-sYsA" +
+    private static final String SEARCH_URL = "https://cit.transit.api.here.com/search/by_geocoord.json?" +
+            "app_id=inhesa7azejETefrudAC&app_code=UP6A4YcFEAgshQMhc-sYsA" +
             "&y=42.365813&x=-71.185237&radius=100&max=20";
+
+    private static final String STOP_IDS_URL = "https://cit.transit.api.here.com/search/by_stopids.json?" +
+            "app_id=inhesa7azejETefrudAC" +
+            "&app_code=UP6A4YcFEAgshQMhc-sYsA" +
+            "&stopIds=REPLACE_ME" +
+            "&lang=en";
+
     private static final String TAG = "HereTransitAPI";
     private List<BusStop> busStops;
     private Activity callback;
-
-    public boolean hasBusStops() {
-        return busStops != null;
-    }
 
     public List<BusStop> getBusStops() {
         return Collections.unmodifiableList(busStops);
@@ -52,13 +56,19 @@ public class HereTransitAPI {
         return null;
     }
 
+    public Object getStationById(String id) {
+        new RetrieveBusStopIdTask(id).execute();
+
+        return null;
+    }
+
     private class SearchForBusStopsNearbyTask extends AsyncTask<Void, Void, Map> {
         @Override
         protected Map doInBackground(Void... params) {
             try {
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                Map obj = restTemplate.getForObject(url, LinkedHashMap.class);
+                Map obj = restTemplate.getForObject(SEARCH_URL, LinkedHashMap.class);
                 return obj;
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage(), e);
@@ -171,6 +181,61 @@ public class HereTransitAPI {
                 busRow.addView(distance);
 
                 buses.addView(busRow);
+            }
+        }
+
+    }
+
+
+    private class RetrieveBusStopIdTask extends AsyncTask<Void, Void, Map> {
+        private String stopId;
+
+        public RetrieveBusStopIdTask(String stopId) {
+            this.stopId = stopId;
+        }
+
+        @Override
+        protected Map doInBackground(Void... params) {
+            try {
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                String url = STOP_IDS_URL.replace("REPLACE_ME", stopId);
+                Map obj = restTemplate.getForObject(url, LinkedHashMap.class);
+                return obj;
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Map obj) {
+            Log.e(TAG, "" + obj);
+            BusStop b = null;
+            if(obj.containsKey("Res")) {
+                Map<String, Object> res = (Map<String, Object>) obj.get("Res");
+                Map<String, Object> stations = (Map<String, Object>) res.get("Stations");
+                List<Object> stnList = (List<Object>) stations.get("Stn");
+                Log.d(TAG, "" + stnList);
+                int i = 0;
+                for (Object stn : stnList) {
+                    Map<String, Object> stnMap = (Map<String, Object>) stn;
+                    String name = (String) stnMap.get("@name");
+                    //String distanceString = (String) stnMap.get("@distance");
+                    String stopId = (String) stnMap.get("@id");
+                    Log.d(TAG, "Object " + i + ": " + stnMap);
+
+                    /*
+                    Get by StopID does not include Line (Bus Route) info
+                     */
+                    i++;
+                    b = new BusStop();
+                    b.setStopId(stopId);
+                    b.setName(name);
+                    Log.i(TAG, "" + b.toString());
+                }
+                Log.i(TAG, "Found " + i + " bus stops nearby");
             }
         }
 
