@@ -139,17 +139,6 @@ public class HereTransitAPI {
 
             for(String route : routes) {
                 TableRow busRow = new TableRow(callback);
-                //FROM HERE
-                /*
-                TextView routeView = new TextView(callback);
-                if(route.length() > 30) {
-                    route = route.substring(0,30);
-                }
-                routeView.setText("" + route);
-                routeView.setTextColor(Color.BLACK);
-                routeView.setGravity(Gravity.LEFT);
-                */
-                //TO HERE
                 Button describeMe = new Button(callback);
                 if(route.length() > 30) {
                     route = route.substring(0,30);
@@ -181,26 +170,6 @@ public class HereTransitAPI {
                 distance.setTextColor(Color.BLACK);
                 distance.setGravity(Gravity.LEFT);
                 busRow.addView(distance);
-
-                /*
-                Button describeMe = new Button(callback);
-                describeMe.setTag(b.getStopId());
-                describeMe.setText("Describe");
-                describeMe.setTextColor(Color.BLACK);
-                describeMe.setGravity(Gravity.CENTER);
-                describeMe.setTextSize(14.0f);
-                describeMe.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(callback.getApplicationContext(), DescribeBusStopActivity.class);
-                        String stopNumber = (String) v.getTag();
-                        intent.putExtra("BUS_STOP", stopNumber);
-                        callback.startActivity(intent);
-                    }
-                });
-
-                busRow.addView(describeMe);
-                */
 
                 buses.addView(busRow);
             }
