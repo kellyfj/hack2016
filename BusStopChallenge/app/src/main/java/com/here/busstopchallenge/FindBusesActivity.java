@@ -113,17 +113,17 @@ public class FindBusesActivity extends AppCompatActivity {
         routes.add("350");
         routes.add("354");
         b350.setRouteList(routes);
-        b350.setStopNumber("8401");
+        b350.setStopId("8401");
         b350.setDistanceInMeters(48.0);
 
         BusStop b90 = new BusStop();
         b90.setRouteList(Arrays.asList(new String[]{"90"}));
-        b90.setStopNumber("7201");
+        b90.setStopId("7201");
         b90.setDistanceInMeters(98.0);
 
         BusStop b94 = new BusStop();
         b94.setRouteList(Arrays.asList(new String[]{"94"}));
-        b94.setStopNumber("4892");
+        b94.setStopId("4892");
         b94.setDistanceInMeters(201.0);
 
         List<BusStop> list = new ArrayList<>();
@@ -171,7 +171,7 @@ public class FindBusesActivity extends AppCompatActivity {
                 busRow.addView(routeView);
 
                 TextView stopNumber = new TextView(this);
-                stopNumber.setText("" + b.getStopNumber());
+                stopNumber.setText("" + b.getStopId());
                 stopNumber.setTextColor(Color.BLACK);
                 stopNumber.setGravity(Gravity.CENTER);
                 busRow.addView(stopNumber);
@@ -184,7 +184,7 @@ public class FindBusesActivity extends AppCompatActivity {
 
 
                 Button describeMe = new Button(this);
-                describeMe.setTag(b.getStopNumber());
+                describeMe.setTag(b.getStopId());
                 describeMe.setText("Describe");
                 describeMe.setTextColor(Color.BLACK);
                 describeMe.setGravity(Gravity.CENTER);

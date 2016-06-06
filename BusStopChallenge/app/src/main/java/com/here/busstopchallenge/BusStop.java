@@ -10,15 +10,16 @@ import java.util.List;
 public class BusStop {
 
     private List<String> routeList = new ArrayList<String>();
-    private String stopNumber;
+    private String stopId;
     private Double distanceInMeters;
     private String stopPoleOrShelterDescription;
     private boolean hasBench;
-    private String benchLocation;
+    private String benchRelativeLocation;
     private boolean hasShelter;
-    private String shelterLocation;
+    private String shelterRelativeLocation;
     private List<String> alsoNearby;
     private String otherHelpfulText;
+    private List<String> scbeAudioObjectIds;
 
     public void setRouteList(List<String> s) {
         routeList = new ArrayList<String>(s);
@@ -30,11 +31,11 @@ public class BusStop {
     }
 
 
-    public String getStopNumber() {
-        return stopNumber;
+    public String getStopId() {
+        return stopId;
     }
-    public void setStopNumber(String s) {
-        stopNumber = s;
+    public void setStopId(String s) {
+        stopId = s;
     }
 
     public Double getDistanceInMeters() {
