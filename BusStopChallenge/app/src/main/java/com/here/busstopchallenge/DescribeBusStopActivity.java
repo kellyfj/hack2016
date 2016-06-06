@@ -42,7 +42,7 @@ public class DescribeBusStopActivity extends AppCompatActivity {
              busStopId = extras.getString("BUS_STOP");
         }
 
-        api.getStationById(busStopId);
+        api.getStationById(this, busStopId);
 
         describeBusButton.setOnClickListener(new View.OnClickListener() {
             @Override

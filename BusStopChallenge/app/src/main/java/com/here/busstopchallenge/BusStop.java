@@ -21,6 +21,8 @@ public class BusStop {
     private List<String> alsoNearby;
     private String otherHelpfulText;
     private List<String> scbeAudioObjectIds;
+    private String lat;
+    private String lon;
 
     public void setRouteList(List<String> s) {
         routeList = new ArrayList<String>(s);
@@ -58,8 +60,11 @@ public class BusStop {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Name: ").append(name)
-                .append("\b Id : " + stopId)
-                .append("\n Distance in Meters: ").append(distanceInMeters);
+                .append("\n Id : " + stopId)
+                .append("\n Distance in Meters: ").append(distanceInMeters)
+                .append("\n Lat: ").append(lat)
+                .append("\n Lon: ").append(lon);
+
         sb.append("\n Routes Include: ");
 
         for(String routeDescription : routeList) {
@@ -67,4 +72,22 @@ public class BusStop {
         }
         return sb.toString();
     }
+
+    public void setLat(String s) {
+        this.lat = s;
+    }
+
+    public String getLat() {
+        return this.lat;
+    }
+
+    public void setLon(String s) {
+        this.lon = s;
+    }
+
+    public String getLon() {
+        return this.lon;
+    }
+
+
 }

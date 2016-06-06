@@ -56,7 +56,8 @@ public class HereTransitAPI {
         return null;
     }
 
-    public Object getStationById(String id) {
+    public Object getStationById(Activity callback, String id) {
+        this.callback = callback;
         new RetrieveBusStopIdTask(id).execute();
 
         return null;
@@ -92,6 +93,8 @@ public class HereTransitAPI {
                         String name = (String) stnMap.get("@name");
                         String distanceString = (String) stnMap.get("@distance");
                         String stopId = (String) stnMap.get("@id");
+                        String lat = (String) stnMap.get("@y");
+                        String lon = (String) stnMap.get("@x");
                         Log.d(TAG, "Object " + i + ": " +stnMap);
 
                         Map<String, Object> lines = (Map<String, Object>) stnMap.get("Lines");
@@ -112,6 +115,8 @@ public class HereTransitAPI {
                         b.setName(name);
                         b.setDistanceInMeters(distanceString);
                         b.setRouteList(routeDescriptionList);
+                        b.setLat(lat);
+                        b.setLon(lon);
                         Log.i(TAG, ""+b.toString());
                         busStops.add(b);
                     }
@@ -124,7 +129,7 @@ public class HereTransitAPI {
     }
 
     public void drawTable(List<BusStop> busList) {
-        TableLayout buses = (TableLayout) callback.findViewById(R.id.busListLayout);
+        TableLayout busesTable = (TableLayout) callback.findViewById(R.id.busListLayout);
         TableRow tbrow0 = new TableRow(callback);
         TextView tv0 = new TextView(callback);
         tv0.setText("Route \n Description");
@@ -139,7 +144,7 @@ public class HereTransitAPI {
         tv2.setTextColor(Color.BLACK);
         tbrow0.addView(tv2);
 
-        buses.addView(tbrow0);
+        busesTable.addView(tbrow0);
 
 
         for (BusStop b : busList) {
@@ -180,7 +185,7 @@ public class HereTransitAPI {
                 distance.setGravity(Gravity.LEFT);
                 busRow.addView(distance);
 
-                buses.addView(busRow);
+                busesTable.addView(busRow);
             }
         }
 
@@ -225,6 +230,8 @@ public class HereTransitAPI {
                     //String distanceString = (String) stnMap.get("@distance");
                     String stopId = (String) stnMap.get("@id");
                     Log.d(TAG, "Object " + i + ": " + stnMap);
+                    String lat = (String) stnMap.get("@y");
+                    String lon = (String) stnMap.get("@x");
 
                     /*
                     Get by StopID does not include Line (Bus Route) info
@@ -233,11 +240,63 @@ public class HereTransitAPI {
                     b = new BusStop();
                     b.setStopId(stopId);
                     b.setName(name);
+                    b.setLat(lat);
+                    b.setLon(lon);
                     Log.i(TAG, "" + b.toString());
                 }
-                Log.i(TAG, "Found " + i + " bus stops nearby");
+                Log.i(TAG, "Found " + i + " bus stops for Id " + stopId);
+                drawDescriptionTable(b);
             }
         }
 
     }
+
+    public void drawDescriptionTable(BusStop busStop) {
+        TableLayout stopTable = (TableLayout) callback.findViewById(R.id.busStopDescriptionLayout);
+        TableRow tbrow0 = new TableRow(callback);
+        TextView tv0 = new TextView(callback);
+        tv0.setText("Field");
+        tv0.setTextColor(Color.BLACK);
+        tbrow0.addView(tv0);
+        TextView tv1 = new TextView(callback);
+        tv1.setText("Value");
+        tv1.setTextColor(Color.BLACK);
+        tbrow0.addView(tv1);
+
+        stopTable.addView(tbrow0);
+
+
+        TableRow stopRow = new TableRow(callback);
+
+        //Name
+        TextView nameField = new TextView(callback);
+        nameField.setText("Name");
+        nameField.setTextColor(Color.BLACK);
+        nameField.setGravity(Gravity.LEFT);
+        stopRow.addView(nameField);
+
+        TextView nameValue = new TextView(callback);
+        nameValue.setText("" + busStop.getName());
+        nameValue.setTextColor(Color.BLACK);
+        nameValue.setGravity(Gravity.LEFT);
+        stopRow.addView(nameValue);
+        stopTable.addView(stopRow);
+
+        //Distance
+        stopRow = new TableRow(callback);
+        TextView distance = new TextView(callback);
+        distance.setText("Distance");
+        distance.setTextColor(Color.BLACK);
+        distance.setGravity(Gravity.LEFT);
+        stopRow.addView(distance);
+
+        TextView distanceValue = new TextView(callback);
+        distanceValue.setText("" + busStop.getDistanceInMeters());
+        distanceValue.setTextColor(Color.BLACK);
+        distanceValue.setGravity(Gravity.LEFT);
+        stopRow.addView(distanceValue);
+        stopTable.addView(stopRow);
+    }
+
+
 }
