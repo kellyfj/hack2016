@@ -56,19 +56,6 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         });
     }
 
-    private String spacifyBusStopNumber(String s) {
-
-        char[] original = s.toCharArray();
-        char[] newArray = new char[original.length*2+1];
-        int j=0;
-
-        for(int i=0; i< original.length; i++) {
-            newArray[j++] = original[i];
-            newArray[j++] = ' ';
-        }
-
-        return new String(newArray).trim();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
