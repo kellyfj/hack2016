@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.here.busstopchallenge.integration.HereTransitAPI;
+import com.here.busstopchallenge.integration.ScbeAPI;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,7 +24,8 @@ public class DescribeBusStopActivity extends AppCompatActivity {
     private Button describeBusButton;
     private TextToSpeech tts;
     private String busStopId;
-    private HereTransitAPI api = new HereTransitAPI();
+    private HereTransitAPI transitApi = new HereTransitAPI();
+    private ScbeAPI scbeApi = new ScbeAPI();
     private static final int HEADER_COLOR = Color.parseColor("#9999ee");
 
     @Override
@@ -49,14 +51,15 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         }
 
         //api.getStationById(this, busStopId);
-        BusStop busStop = api.getCachedBusStop(busStopId);
+        BusStop busStop = transitApi.getCachedBusStop(busStopId);
         drawDescriptionTable(busStop);
 
+        scbeApi.getUGCForBusStop(this, busStopId);
         describeBusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //String spacifiedBusStopId = spacifyBusStopNumber(busStopId);
-                BusStop cached = api.getCachedBusStop(busStopId);
+                BusStop cached = transitApi.getCachedBusStop(busStopId);
                 String toSpeak = "Describing Bus stop  " + cached.getName();
                 tts.speak(toSpeak, TextToSpeech.QUEUE_ADD, null);
 
