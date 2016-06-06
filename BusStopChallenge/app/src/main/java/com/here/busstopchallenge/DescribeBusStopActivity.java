@@ -43,7 +43,7 @@ public class DescribeBusStopActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String spacifiedBusStopId = spacifyBusStopNumber(busStopId);
-                String toSpeak = "Describing Bus stop Id " + spacifiedBusStopId;
+                String toSpeak = "Describing Bus stop  " + spacifiedBusStopId;
                 tts.speak(toSpeak, TextToSpeech.QUEUE_ADD, null);
 
             }
