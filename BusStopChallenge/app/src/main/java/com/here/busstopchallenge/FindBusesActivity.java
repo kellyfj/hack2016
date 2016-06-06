@@ -26,10 +26,29 @@ public class FindBusesActivity extends AppCompatActivity {
     private TextToSpeech tts;
     private Button sayFoundBusesButton;
 
+    GPSTracker gps;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_buses);
+
+        gps = new GPSTracker(FindBusesActivity.this);
+
+        // Check if GPS enabled
+        if(gps.canGetLocation()) {
+
+            double latitude = gps.getLatitude();
+            double longitude = gps.getLongitude();
+
+            // \n is for new line
+            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+        } else {
+            // Can't get location.
+            // GPS or network is not enabled.
+            // Ask user to enable GPS/network in settings.
+            gps.showSettingsAlert();
+        }
 
         initTable();
         sayFoundBusesButton=(Button)findViewById(R.id.sayBusesFoundButton);
