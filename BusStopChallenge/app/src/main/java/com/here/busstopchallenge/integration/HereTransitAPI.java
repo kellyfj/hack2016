@@ -222,6 +222,8 @@ public class HereTransitAPI {
             }
         }
 
+        Button sayItButton = (Button) callback.findViewById(R.id.sayBusesFoundButton);
+        sayItButton.setEnabled(true);
     }
 
     private String replaceSecondSpaceWithNewLine(String stopName) {

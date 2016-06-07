@@ -277,5 +277,8 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         nearbyValues.setPadding(5, 1, 5, 1);
         stopRow.addView(nearbyValues);
         stopTable.addView(stopRow);
+
+        Button sayItButton = (Button) this.findViewById(R.id.describeBusStop);
+        sayItButton.setEnabled(true);
     }
 }
