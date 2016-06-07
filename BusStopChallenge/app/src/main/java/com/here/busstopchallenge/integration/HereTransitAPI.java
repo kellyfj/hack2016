@@ -145,17 +145,17 @@ public class HereTransitAPI {
         TableLayout busesTable = (TableLayout) callback.findViewById(R.id.busListLayout);
         TableRow tbrow0 = new TableRow(callback);
         TextView tv0 = new TextView(callback);
-        tv0.setText("Route \n Description");
+        tv0.setText("Route\nDescription");
         tv0.setTextColor(Color.BLACK);
         tv0.setBackgroundColor(HEADER_COLOR);
         tbrow0.addView(tv0);
         TextView tv1 = new TextView(callback);
-        tv1.setText("Stop \n Name");
+        tv1.setText("Stop\nName");
         tv1.setTextColor(Color.BLACK);
         tv1.setBackgroundColor(HEADER_COLOR);
         tbrow0.addView(tv1);
         TextView tv2 = new TextView(callback);
-        tv2.setText("Distance \n (Meters)");
+        tv2.setText("Distance\n(Meters)");
         tv2.setTextColor(Color.BLACK);
         tv2.setBackgroundColor(HEADER_COLOR);
         tbrow0.addView(tv2);
@@ -174,7 +174,7 @@ public class HereTransitAPI {
                     route = route.substring(0,30);
                 }
                 describeMe.setTag(b.getStopId());
-                describeMe.setText(""+ route);
+                describeMe.setText("" + route);
                 describeMe.setTextColor(Color.BLACK);
                 describeMe.setGravity(Gravity.CENTER);
                 describeMe.setTextSize(14.0f);
@@ -190,7 +190,10 @@ public class HereTransitAPI {
                 busRow.addView(describeMe);
 
                 TextView stopNumber = new TextView(callback);
-                stopNumber.setText("" + b.getName());
+                String stopName = b.getName();
+                //Make it less wide on the screen
+                String stopDisplayName = replaceSecondSpaceWithNewLine(stopName);
+                stopNumber.setText(stopDisplayName);
                 stopNumber.setTextColor(Color.BLACK);
                 stopNumber.setGravity(Gravity.LEFT);
                 busRow.addView(stopNumber);
@@ -205,6 +208,20 @@ public class HereTransitAPI {
             }
         }
 
+    }
+
+    private String replaceSecondSpaceWithNewLine(String stopName) {
+
+            int pos = stopName.indexOf(" ", 0);
+            int pos2 = stopName.indexOf(" ", pos+1);
+
+            if(pos2 > -1) {
+               StringBuilder sb = new StringBuilder(stopName);
+                sb.setCharAt(pos2, '\n');
+                return sb.toString();
+            }
+
+            return stopName;
     }
 
 
