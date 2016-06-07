@@ -69,7 +69,8 @@ public class DescribeBusStopActivity extends AppCompatActivity {
 
     private String createBusStopDetailedDescription(BusStop b) {
         StringBuilder sb = new StringBuilder("Describing Bus stop  " + b.getName() + ".");
-
+        sb.append(" ");
+        
         if(b.hasBench() != null) {
             if(b.hasBench()) {
                 sb.append("It has a bench.");
