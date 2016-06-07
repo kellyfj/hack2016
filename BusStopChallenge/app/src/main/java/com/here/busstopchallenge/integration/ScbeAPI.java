@@ -25,6 +25,8 @@ public class ScbeAPI {
 
     private static final String SCBE_SEARCH_URL = "https://scbe.sit.api.here.com/scbe/v20/search?q=+type:busstop +placeId:";
     private static final String TAG = "ScbeAPI";
+
+    //This is a very short-lived key lasting at most 300 seconds
     private static final String ACCESS_TOKEN = "h1.PH3t8CcKm3XCVddsP96qgA.oWVHl-KVmz5oY1ikD63vjtIMMSyU3GaOuVgDDrwMwKPmZjO5o7YDkBSfDDSq4N2JBjopoPYQpf_-NZWGjJmJYyHLAsJtosI7MXLl6FYiEcSxVSiuM3sse8FflyN6jQEkwsD7C6C4Rn570ujk544hnX66nVBO6eOzByJXxeg-P1TFQe_qlveHefC2uKTPWf6crJL-ICLtzBR7yXsGc2vkhj5B9XcPHERvuhMlagbCUmHoSTBi6VSn9kLFKoFkcBE7T0RL0ibw5P6pnfvU1Jxt16ie2xQ9aKTtHmCeiwCIXflovGsbhG0hip57W2rdnrfBLpQSaeukPvw2J_PC_ZpQrjWmb_JMDfyyEgAr1BHgZ84EEpsCYBt4nLcnQhrXpYvV5vtW3v08PJ99AZLcTCiQrEBIm3vWGml8QYj8FxPlHDw.PjC9JvaQf6p-w6jwOoisVZmjFaeFaUyuHjJNMmXY1d292pdRhX851DYbn39FYnCdz4Br2Fkm5Il8Wr0etcngU-IWQF4-YmpmS0cbGN6nQMFtFnVC1fXzi8tiA-qcQUcqv8WWoZpZhXehwRuzwn-6iX5NkLfoM_dTsbCbM6xYhllM5Xzzn-linUtqt9LkgTMIuMbPDHnoCjy3CuiGdRe1oKNBi_QMKNNa4PeOwsX-SCFls1wP-RXHLBgzj8hqxOtCtYtyzVMUiLIaF1LYXGVLHuJTRSkXd58dA10EYU5XoPnLNQjWbOh9591wpKG1COj3cznFYDBYzoEfCGW6B1mkyg";
 
     public Object getUGCForBusStop(Activity callback, String stopId) {
