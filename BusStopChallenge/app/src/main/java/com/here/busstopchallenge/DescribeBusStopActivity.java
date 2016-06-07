@@ -216,6 +216,7 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         stopTable.addView(stopRow);
 
         //Bench
+
         stopRow = new TableRow(this);
         TextView bench = new TextView(this);
         bench.setText("Has Bench?");
@@ -225,7 +226,7 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         stopRow.addView(bench);
 
         TextView benchValue = new TextView(this);
-        benchValue.setText("" + busStop.hasBench());
+        benchValue.setText("" + ((busStop.hasBench() == null) ? "Unknown" : busStop.hasBench()));
         benchValue.setTextColor(Color.BLACK);
         benchValue.setGravity(Gravity.LEFT);
         benchValue.setPadding(5, 1, 5, 1);
@@ -242,7 +243,7 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         stopRow.addView(shelter);
 
         TextView shelterValue = new TextView(this);
-        shelterValue.setText("" + busStop.hasBench());
+        shelterValue.setText("" + ((busStop.hasShelter() == null) ? "Unknown": busStop.hasShelter()));
         shelterValue.setTextColor(Color.BLACK);
         shelterValue.setGravity(Gravity.LEFT);
         shelterValue.setPadding(5, 1, 5, 1);
@@ -265,6 +266,8 @@ public class DescribeBusStopActivity extends AppCompatActivity {
             for (String s : busStop.getAlsoNearby()) {
                 sb2.append(s).append("\n");
             }
+        } else {
+            sb2.append("Unknown");
         }
 
         nearbyValues.setText("" + sb2.toString());
