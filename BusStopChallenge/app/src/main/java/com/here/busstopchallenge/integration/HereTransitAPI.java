@@ -189,19 +189,21 @@ public class HereTransitAPI {
                 });
                 busRow.addView(describeMe);
 
-                TextView stopNumber = new TextView(callback);
+                TextView stopNameField = new TextView(callback);
                 String stopName = b.getName();
                 //Make it less wide on the screen
                 String stopDisplayName = replaceSecondSpaceWithNewLine(stopName);
-                stopNumber.setText(stopDisplayName);
-                stopNumber.setTextColor(Color.BLACK);
-                stopNumber.setGravity(Gravity.LEFT);
-                busRow.addView(stopNumber);
+                stopNameField.setText(stopDisplayName);
+                stopNameField.setTextColor(Color.BLACK);
+                stopNameField.setGravity(Gravity.LEFT);
+                stopNameField.setPadding(5,1,5,1);
+                busRow.addView(stopNameField);
 
                 TextView distance = new TextView(callback);
                 distance.setText("" + b.getDistanceInMeters());
                 distance.setTextColor(Color.BLACK);
-                distance.setGravity(Gravity.LEFT);
+                distance.setGravity(Gravity.CENTER);
+                distance.setPadding(5,1,5,1);
                 busRow.addView(distance);
 
                 busesTable.addView(busRow);
