@@ -1,6 +1,6 @@
 #HERE Hackathon 2016 - Perkins BusStop Challenge
 
-#Team Members
+##Team Members
 * Frank Kelly
 * Anish Bivalkar
 
