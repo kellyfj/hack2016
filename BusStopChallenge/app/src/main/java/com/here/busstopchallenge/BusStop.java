@@ -81,6 +81,13 @@ public class BusStop {
         return hasShelter;
     }
 
+    public List<String> getAlsoNearby() {
+        if(alsoNearby != null)
+            return Collections.unmodifiableList(alsoNearby);
+        else
+            return null;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Name: ").append(name)

@@ -83,10 +83,23 @@ public class DescribeBusStopActivity extends AppCompatActivity {
             if(b.hasShelter()) {
                 sb.append("There is a shelter.");
             } else {
-                sb.append("There is no shelter nearby");
+                sb.append("There is no shelter nearby.");
             }
         } else {
-            sb.append("No shelter information is available");
+            sb.append("No shelter information is available.");
+        }
+
+        if(b.getAlsoNearby() != null) {
+            if(!b.getAlsoNearby().isEmpty()) {
+                sb.append("Also nearby :");
+                for (String s : b.getAlsoNearby()) {
+                    sb.append(s + ".");
+                }
+            } else {
+                sb.append("No other nearby objects are noted.");
+            }
+        } else {
+            sb.append("No other nearby objects are noted.");
         }
 
         return sb.toString();
