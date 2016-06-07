@@ -32,12 +32,14 @@ import java.util.Map;
 public class HereTransitAPI {
     private static final String APP_ID = "inhesa7azejETefrudAC";
     private static final String APP_CODE = "UP6A4YcFEAgshQMhc-sYsA";
+    //Perkins school is close to Watertown square so using that for basic testing
     private static final String WATERTOWN_LAT = "42.365813";
     private static final String WATERTOWN_LON = "-71.185237";
     private static final Map<String, BusStop> BUS_STOP_CACHE = new HashMap<String, BusStop>();
+    //Currently using Customer Integration Testing (CIT) environment
     private static final String SEARCH_URL = "https://cit.transit.api.here.com/search/by_geocoord.json?" +
             "app_id="+APP_ID+"&app_code=" +APP_CODE +
-            "&y=" + WATERTOWN_LAT + "&x=" + WATERTOWN_LON + "&radius=100&max=20";
+            "&y=" + WATERTOWN_LAT + "&x=" + WATERTOWN_LON + "&radius=50&max=20";
 
     private static final String STOP_IDS_URL = "https://cit.transit.api.here.com/search/by_stopids.json?" +
             "app_id=" +APP_ID +
