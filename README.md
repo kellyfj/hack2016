@@ -16,12 +16,16 @@ The code here is for the Android App that takes the data from both the HERE Tran
 * Voice Activation e.g. "OK Google, show me bus stops nearby"
 * Text-to-Speech of screen content e.g. "There is a trash can one meter to the right of the bus stop"
 
-
-Great paper describing viability of Crowd-sourced descriptive data via Google / Here Street View
-https://www.cs.umd.edu/~jonf/publications/Hara_ImprovingPublicTransitAccessibilityUsingGoogleStreetView-AnExtendedAnalysis_TACCESS2015.pdf
+The Voice Activation was not implemented at this time because
+1. Many of the features are only available in Android 6.0 (my phone only supports Android 4.4)
+2. The Emulator does not support Voice Activation
 
 ##App Data Flow Proposed
 
 ![Alt text](/docs/dataflow.jpg?raw=true "Data Flow Diagram")
+
+##Resources
+Great paper describing viability of Crowd-sourced descriptive data via Google / Here Street View
+https://www.cs.umd.edu/~jonf/publications/Hara_ImprovingPublicTransitAccessibilityUsingGoogleStreetView-AnExtendedAnalysis_TACCESS2015.pdf
 
 
