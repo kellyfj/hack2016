@@ -73,8 +73,16 @@ public class BusStop {
         return this.lon;
     }
 
+    public void setHasBench(Boolean b) {
+        hasBench = b;
+    }
+
     public Boolean hasBench() {
         return hasBench;
+    }
+
+    public void setHasShelter(Boolean b) {
+        hasShelter = b;
     }
 
     public Boolean hasShelter() {
@@ -86,6 +94,10 @@ public class BusStop {
             return Collections.unmodifiableList(alsoNearby);
         else
             return null;
+    }
+
+    public void setAlsoNearby(List<String> l) {
+        alsoNearby = l;
     }
 
     public String toString() {

@@ -79,6 +79,8 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         } else {
             sb.append("No bench information is available.");
         }
+        sb.append(" ");
+
         if(b.hasShelter() != null) {
             if(b.hasShelter()) {
                 sb.append("There is a shelter.");
@@ -88,12 +90,13 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         } else {
             sb.append("No shelter information is available.");
         }
+        sb.append(" ");
 
         if(b.getAlsoNearby() != null) {
             if(!b.getAlsoNearby().isEmpty()) {
                 sb.append("Also nearby :");
                 for (String s : b.getAlsoNearby()) {
-                    sb.append(s + ".");
+                    sb.append(s + ".").append(" ");
                 }
             } else {
                 sb.append("No other nearby objects are noted.");
@@ -101,6 +104,7 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         } else {
             sb.append("No other nearby objects are noted.");
         }
+        sb.append(" ");
 
         return sb.toString();
     }

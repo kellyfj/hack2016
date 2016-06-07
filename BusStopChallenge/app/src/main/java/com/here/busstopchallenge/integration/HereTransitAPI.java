@@ -52,6 +52,18 @@ public class HereTransitAPI {
     private List<BusStop> busStops;
     private Activity callback;
 
+    static void updateBusStopCache(String stopId, Boolean hasBench, Boolean hasShelter, List<String> alsoNearby) {
+        BusStop b = BUS_STOP_CACHE.get(stopId);
+
+        if(b == null) {
+            throw new IllegalArgumentException("Bus Stop " + stopId + " not found in cache");
+        }
+        b.setHasBench(hasBench);
+        b.setHasShelter(hasShelter);
+        b.setAlsoNearby(alsoNearby);
+
+    }
+
     public List<BusStop> getBusStops() {
         return Collections.unmodifiableList(busStops);
     }
@@ -196,7 +208,7 @@ public class HereTransitAPI {
                 stopNameField.setText(stopDisplayName);
                 stopNameField.setTextColor(Color.BLACK);
                 stopNameField.setGravity(Gravity.LEFT);
-                stopNameField.setPadding(5,1,5,1);
+                stopNameField.setPadding(5, 1, 5, 1);
                 busRow.addView(stopNameField);
 
                 TextView distance = new TextView(callback);

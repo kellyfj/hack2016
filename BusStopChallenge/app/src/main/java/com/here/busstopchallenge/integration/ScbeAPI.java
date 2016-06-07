@@ -69,8 +69,19 @@ public class ScbeAPI {
 
         @Override
         protected void onPostExecute(Map obj) {
-            Log.e(TAG, "" + obj);
+            Log.w(TAG, "" + obj);
 
+            List data = (List) obj.get("data");
+            for(Object o : data) {
+                Map<String, Object> mapObject = (Map<String, Object>) o;
+                Map<String, Object> scbeObject = (Map<String, Object>) mapObject.get("object");
+
+                String busStopId = (String) scbeObject.get("stopId");
+                Boolean hasBench = (Boolean) scbeObject.get("hasBench");
+                Boolean hasShelter = (Boolean) scbeObject.get("hasShelter");
+                List<String> nearbyObjectList = (List<String>) scbeObject.get("nearbyObjects");
+                HereTransitAPI.updateBusStopCache(busStopId, hasBench, hasShelter, nearbyObjectList);
+            }
         }
 
     }
