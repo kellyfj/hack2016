@@ -62,7 +62,7 @@ public class FindBusesActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if(status != TextToSpeech.ERROR) {
-                    tts.setLanguage(Locale.US);
+                    tts.setLanguage(Locale.UK);
                 }
             }
         });

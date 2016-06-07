@@ -50,11 +50,11 @@ public class DescribeBusStopActivity extends AppCompatActivity {
              busStopId = extras.getString("BUS_STOP");
         }
 
+        scbeApi.getUGCForBusStop(this, busStopId);
         //api.getStationById(this, busStopId);
         BusStop busStop = transitApi.getCachedBusStop(busStopId);
-        drawDescriptionTable(busStop);
 
-        scbeApi.getUGCForBusStop(this, busStopId);
+
         describeBusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,12 +165,14 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         nameField.setText("Name");
         nameField.setTextColor(Color.BLACK);
         nameField.setGravity(Gravity.LEFT);
+        nameField.setPadding(5,1,5,1);
         stopRow.addView(nameField);
 
         TextView nameValue = new TextView(this);
         nameValue.setText("" + busStop.getName());
         nameValue.setTextColor(Color.BLACK);
         nameValue.setGravity(Gravity.LEFT);
+        nameValue.setPadding(5, 1, 5, 1);
         stopRow.addView(nameValue);
         stopTable.addView(stopRow);
 
@@ -180,12 +182,14 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         distance.setText("Distance");
         distance.setTextColor(Color.BLACK);
         distance.setGravity(Gravity.LEFT);
+        distance.setPadding(5, 1, 5, 1);
         stopRow.addView(distance);
 
         TextView distanceValue = new TextView(this);
-        distanceValue.setText("" + busStop.getDistanceInMeters());
+        distanceValue.setText("" + busStop.getDistanceInMeters() + " meters");
         distanceValue.setTextColor(Color.BLACK);
         distanceValue.setGravity(Gravity.LEFT);
+        distanceValue.setPadding(5, 1, 5, 1);
         stopRow.addView(distanceValue);
         stopTable.addView(stopRow);
 
@@ -195,6 +199,7 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         route.setText("Routes Served");
         route.setTextColor(Color.BLACK);
         route.setGravity(Gravity.LEFT);
+        route.setPadding(5, 1, 5, 1);
         stopRow.addView(route);
 
         TextView routeValues = new TextView(this);
@@ -206,7 +211,67 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         routeValues.setText("" + sb.toString());
         routeValues.setTextColor(Color.BLACK);
         routeValues.setGravity(Gravity.LEFT);
+        routeValues.setPadding(5, 1, 5, 1);
         stopRow.addView(routeValues);
+        stopTable.addView(stopRow);
+
+        //Bench
+        stopRow = new TableRow(this);
+        TextView bench = new TextView(this);
+        bench.setText("Has Bench?");
+        bench.setTextColor(Color.BLACK);
+        bench.setGravity(Gravity.LEFT);
+        bench.setPadding(5, 1, 5, 1);
+        stopRow.addView(bench);
+
+        TextView benchValue = new TextView(this);
+        benchValue.setText("" + busStop.hasBench());
+        benchValue.setTextColor(Color.BLACK);
+        benchValue.setGravity(Gravity.LEFT);
+        benchValue.setPadding(5, 1, 5, 1);
+        stopRow.addView(benchValue);
+        stopTable.addView(stopRow);
+
+        //Shelter
+        stopRow = new TableRow(this);
+        TextView shelter = new TextView(this);
+        shelter.setText("Has Shelter?");
+        shelter.setTextColor(Color.BLACK);
+        shelter.setGravity(Gravity.LEFT);
+        shelter.setPadding(5, 1, 5, 1);
+        stopRow.addView(shelter);
+
+        TextView shelterValue = new TextView(this);
+        shelterValue.setText("" + busStop.hasBench());
+        shelterValue.setTextColor(Color.BLACK);
+        shelterValue.setGravity(Gravity.LEFT);
+        shelterValue.setPadding(5, 1, 5, 1);
+        stopRow.addView(shelterValue);
+        stopTable.addView(stopRow);
+
+        stopRow = new TableRow(this);
+
+        //Also nearby
+        TextView nearby = new TextView(this);
+        nearby.setText("Also Nearby");
+        nearby.setTextColor(Color.BLACK);
+        nearby.setGravity(Gravity.LEFT);
+        nearby.setPadding(5, 1, 5, 1);
+        stopRow.addView(nearby);
+
+        TextView nearbyValues = new TextView(this);
+        StringBuilder sb2 = new StringBuilder();
+        if(busStop.getAlsoNearby() != null) {
+            for (String s : busStop.getAlsoNearby()) {
+                sb2.append(s).append("\n");
+            }
+        }
+
+        nearbyValues.setText("" + sb2.toString());
+        nearbyValues.setTextColor(Color.BLACK);
+        nearbyValues.setGravity(Gravity.LEFT);
+        nearbyValues.setPadding(5, 1, 5, 1);
+        stopRow.addView(nearbyValues);
         stopTable.addView(stopRow);
     }
 }

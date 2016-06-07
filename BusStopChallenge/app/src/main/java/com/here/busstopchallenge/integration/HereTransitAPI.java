@@ -68,7 +68,7 @@ public class HereTransitAPI {
         return Collections.unmodifiableList(busStops);
     }
 
-    public BusStop getCachedBusStop(String id) {
+    public static BusStop getCachedBusStop(String id) {
         return BUS_STOP_CACHE.get(id);
     }
 
