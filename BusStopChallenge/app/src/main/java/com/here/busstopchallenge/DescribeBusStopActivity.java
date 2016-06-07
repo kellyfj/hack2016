@@ -39,7 +39,7 @@ public class DescribeBusStopActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if(status != TextToSpeech.ERROR) {
-                    tts.setLanguage(Locale.US);
+                    tts.setLanguage(Locale.UK);
                 }
             }
         });
@@ -106,7 +106,9 @@ public class DescribeBusStopActivity extends AppCompatActivity {
         }
         sb.append(" ");
 
-        return sb.toString();
+        //Hack to fix saying "Row" the right way (as in column vs. row, not, my wife and
+        // I are having a row)
+        return sb.toString().replace("Row", "Roe");
     }
 
     @Override
