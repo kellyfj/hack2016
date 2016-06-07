@@ -14,9 +14,9 @@ public class BusStop {
     private String stopId;
     private String distanceInMeters;
     private String stopPoleOrShelterDescription;
-    private boolean hasBench;
+    private Boolean hasBench;
     private String benchRelativeLocation;
-    private boolean hasShelter;
+    private Boolean hasShelter;
     private String shelterRelativeLocation;
     private List<String> alsoNearby;
     private String otherHelpfulText;
@@ -57,22 +57,6 @@ public class BusStop {
         return this.name;
     }
 
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Name: ").append(name)
-                .append("\n Id : " + stopId)
-                .append("\n Distance in Meters: ").append(distanceInMeters)
-                .append("\n Lat: ").append(lat)
-                .append("\n Lon: ").append(lon);
-
-        sb.append("\n Routes Include: ");
-
-        for(String routeDescription : routeList) {
-            sb.append("\n\t " + routeDescription);
-        }
-        return sb.toString();
-    }
-
     public void setLat(String s) {
         this.lat = s;
     }
@@ -89,5 +73,27 @@ public class BusStop {
         return this.lon;
     }
 
+    public Boolean hasBench() {
+        return hasBench;
+    }
 
+    public Boolean hasShelter() {
+        return hasShelter;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(name)
+                .append("\n Id : " + stopId)
+                .append("\n Distance in Meters: ").append(distanceInMeters)
+                .append("\n Lat: ").append(lat)
+                .append("\n Lon: ").append(lon);
+
+        sb.append("\n Routes Include: ");
+
+        for(String routeDescription : routeList) {
+            sb.append("\n\t " + routeDescription);
+        }
+        return sb.toString();
+    }
 }

@@ -60,13 +60,37 @@ public class DescribeBusStopActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //String spacifiedBusStopId = spacifyBusStopNumber(busStopId);
                 BusStop cached = transitApi.getCachedBusStop(busStopId);
-                String toSpeak = "Describing Bus stop  " + cached.getName();
+                String toSpeak = createBusStopDetailedDescription(cached);
                 tts.speak(toSpeak, TextToSpeech.QUEUE_ADD, null);
 
             }
         });
     }
 
+    private String createBusStopDetailedDescription(BusStop b) {
+        StringBuilder sb = new StringBuilder("Describing Bus stop  " + b.getName() + ".");
+
+        if(b.hasBench() != null) {
+            if(b.hasBench()) {
+                sb.append("It has a bench.");
+            } else {
+                sb.append("It does not have a bench nearby.");
+            }
+        } else {
+            sb.append("No bench information is available.");
+        }
+        if(b.hasShelter() != null) {
+            if(b.hasShelter()) {
+                sb.append("There is a shelter.");
+            } else {
+                sb.append("There is no shelter nearby");
+            }
+        } else {
+            sb.append("No shelter information is available");
+        }
+
+        return sb.toString();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
