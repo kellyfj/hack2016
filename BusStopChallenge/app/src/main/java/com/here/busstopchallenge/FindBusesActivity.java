@@ -122,7 +122,8 @@ public class FindBusesActivity extends AppCompatActivity {
     public void onPause(){
         if(tts !=null){
             tts.stop();
-            tts.shutdown();
+            //tts.shutdown();  Required to avoid bug during demo
+            // See http://stackoverflow.com/questions/36271853/pico-tts-engine-has-stopped-error
         }
         super.onPause();
     }

@@ -60,7 +60,13 @@ public class HereTransitAPI {
         }
         b.setHasBench(hasBench);
         b.setHasShelter(hasShelter);
-        b.setAlsoNearby(alsoNearby);
+
+        //Hack for purposes of demo
+        if(alsoNearby.size() > 3) {
+            b.setAlsoNearby(alsoNearby.subList(0,3));
+        } else {
+            b.setAlsoNearby(alsoNearby);
+        }
 
     }
 
